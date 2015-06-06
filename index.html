@@ -83,9 +83,14 @@ function reset() {
   repaint();
 }
 
+function allRemoved(pais) {
+  return (pais[8-1] == null);
+}
+
 function repaint() {
   ctx.clearRect(0, 0, 800, 600);
   ctx.beginPath();
+  //左上から下に向かって描画する
   for (var i = 0; i < 17; i++) {
     for (var j = 0; j < 8; j++) {
       var img = new Image();
