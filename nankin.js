@@ -154,5 +154,7 @@ canvas.addEventListener("click", function(e){
   repaint();
 });
 
-initialize();
-repaint();
+setTimeout(function(){
+  initialize();
+  repaint();
+}, 0);
