@@ -1,10 +1,10 @@
 var srcs = [
-  "p_ji_c_1.gif",
-  "p_ji_e_1.gif",
-  "p_ji_h_1.gif",
-  "p_ji_n_1.gif",
-  "p_ji_s_1.gif",
-  "p_ji_w_1.gif",
+//  "p_ji_c_1.gif",
+//  "p_ji_e_1.gif",
+//  "p_ji_h_1.gif",
+//  "p_ji_n_1.gif",
+//  "p_ji_s_1.gif",
+//  "p_ji_w_1.gif",
   "p_ms1_1.gif",
   "p_ms2_1.gif",
   "p_ms3_1.gif",
@@ -14,7 +14,7 @@ var srcs = [
   "p_ms7_1.gif",
   "p_ms8_1.gif",
   "p_ms9_1.gif",
-  "p_no_1.gif",
+//  "p_no_1.gif",
   "p_ps1_1.gif",
   "p_ps2_1.gif",
   "p_ps3_1.gif",
@@ -35,6 +35,8 @@ var srcs = [
   "p_ss9_1.gif",
 ];
 
+var COLS = 12;
+var ROWS = 9;
 var pais = null;
 var firstX = null;
 var firstY = null;
@@ -63,17 +65,17 @@ function reset() {
 }
 
 function allRemoved(pais) {
-  return (pais[8-1] == null);
+  return (pais[ROWS-1] == null);
 }
 
 function repaint() {
   ctx.clearRect(0, 0, 800, 600);
   ctx.beginPath();
   //左上から下に向かって描画する
-  for (var i = 0; i < 17; i++) {
-    for (var j = 0; j < 8; j++) {
+  for (var i = 0; i < COLS; i++) {
+    for (var j = 0; j < ROWS; j++) {
       var img = new Image();
-      img.src = "images/"+pais[8*i+j];
+      img.src = "images/"+pais[ROWS*i+j];
       ctx.drawImage(img, i*47, j*63);
     }
   }
@@ -85,53 +87,51 @@ function repaint() {
 }
 
 function shiftDownLeft(a) {
-  for (var i = 0; i < 17; i++)
+  for (var i = 0; i < COLS; i++)
     shiftDown(a, i);
-  for (var i = 0; i < 17; i++)
+  for (var i = 0; i < COLS; i++)
     shiftDown(a, i);
 
-  for (var i = 0; i < 17; i++)
+  for (var i = 0; i < COLS; i++)
     shiftLeft(a, i);
-  for (var i = 0; i < 17; i++)
+  for (var i = 0; i < COLS; i++)
     shiftLeft(a, i);
 
   function shiftDown(a, i) {
-    for (var j = 8-1; j > 0; j--) {
-      if (a[8*i+j] == null) {
-        a[8*i+j] = a[8*i+j-1];
-        a[8*i+j-1] = null;
+    for (var j = ROWS-1; j > 0; j--) {
+      if (a[ROWS*i+j] == null) {
+        a[ROWS*i+j] = a[ROWS*i+j-1];
+        a[ROWS*i+j-1] = null;
       }
     }
   }
 
   function shiftLeft(a, i) {
-    for (var j = 0; j < 8; j++) {
-      if (a[8*i+j] != null)
+    for (var j = 0; j < ROWS; j++) {
+      if (a[ROWS*i+j] != null)
         return false;
     }
-    for (var j = 0; j < 8; j++) {
-      a[8*i+j] = a[8*(i+1)+j];
-      a[8*(i+1)+j] = null;
+    for (var j = 0; j < ROWS; j++) {
+      a[ROWS*i+j] = a[ROWS*(i+1)+j];
+      a[ROWS*(i+1)+j] = null;
     }
   }
 }
 
 canvas.addEventListener("click", function(e){
   console.log(e);
-  console.log(e.clientX-9);
-  console.log(e.clientY-9);
 
-  var x = e.clientX-9;
-  var y = e.clientY-9;
+  var x = e.clientX-$("canvas").position().left;
+  var y = e.clientY-$("canvas").position().top;
 
   var secondX = Math.floor(x/47);
   var secondY = Math.floor(y/63);
-  var second1 = 8*secondX+secondY;
+  var second1 = ROWS*secondX+secondY;
 
   if (pais[second1] == null) return;
 
   if (firstX != null && firstY != null) {
-    var first1 = 8*firstX+firstY;
+    var first1 = ROWS*firstX+firstY;
 
     var dist = (firstX-secondX)*(firstX-secondX) + (firstY-secondY)*(firstY-secondY);
     if (first1 != second1 && (firstX == secondX || firstY == secondY || dist <= 2) && pais[first1] == pais[second1]) {

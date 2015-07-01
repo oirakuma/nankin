@@ -1,22 +1,31 @@
 <html>
 <head>
-<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css">
+<link rel="stylesheet" href="vendor/jquery.mobile-1.4.5.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
 <meta charset="UTF-8">
 <style>
 canvas {
   background-color: green;
 }
+h1 {
+  text-align: center;
+  font-size: 4em;
+}
 </style>
 </head>
 <body>
 
-<canvas id="canvas" width="799" height="504"></canvas>
+<h1>Nankin for Smartphone</h1>
+
+<center>
+<canvas id="canvas" width="564" height="567"></canvas>
+</center>
 <div>
-<button data-inline="true" onclick="reset()">リセット</button>
+<button onclick="reset()">リセット</button>
 </div>
 
-<script src="jquery.min.js"></script>
-<script src="jquery.mobile-1.4.5.min.js"></script>
+<script src="vendor/jquery.min.js"></script>
+<script src="vendor/jquery.mobile-1.4.5.min.js"></script>
 <script src="nankin.js"></script>
 </body>
 </html>
